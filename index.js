@@ -20,23 +20,47 @@ const main = async () => {
             const userData = { username: username, email: email, password: password }
 
             if (!existingFields(userData)) {
-                result = 'Username, email and password are required'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Username, email and password are required. °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             } else if (!emailFormat(userData.email)) {
-                result = 'Invalid format for email, it should ends with @gmail.com'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °           Invalid format for email.          °           
+                °       It should ends with @gmail.com.        °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
             if (!verifyDataLength(username) || !verifyDataLength(password)) {
-                result = 'Password and username must include between 4 and 20 characters'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Password and username must include   °       
+                °   between 4 and 20 characters          °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
             if (!charactersValidation(username, 'username')) {
-                result = 'Username must contains words'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Username must contains words   °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             } else if (!charactersValidation(password, 'password')) {
-                result = 'Password must includes at least a capital letter, a lower case letter and a number'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Password must includes at least  ° 
+                °   a capital letter, a lower case   ° 
+                °   letter and a number              °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
@@ -48,26 +72,54 @@ const main = async () => {
             const id = values[4]
 
             if (!existingFields(newUserData)) {
-                result = 'The new username, email and password are needed'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   New username, email and password are required.   °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             } else if (!id) {
-                result = 'ID is required to know the user to update'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   ID is required to know the user to update  °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             } else if (!emailFormat(newUserData.email)) {
-                result = 'Invalid format for email, it should ends with @gmail.com'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °           Invalid format for email.          °           
+                °       It should ends with @gmail.com.        °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
             if (!verifyDataLength(username) || !verifyDataLength(password)) {
-                result = 'Password and username must include between 4 and 20 characters'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Password and username must include   °       
+                °   between 4 and 20 characters          °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
             if (!charactersValidation(username, 'username')) {
-                result = 'Username must contains words'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Username must contains words   °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             } else if (!charactersValidation(password, 'password')) {
-                result = 'Incorrect format for password'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   Password must includes at least  ° 
+                °   a capital letter, a lower case   ° 
+                °   letter and a number              °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 
@@ -77,7 +129,11 @@ const main = async () => {
         case 'delete':
             const idDeleted = values[1]
             if (!idDeleted) {
-                result = 'ID is required'
+                result = `
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                °   ID is required to know the user to delete  °
+                °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+                `
                 break
             }
 

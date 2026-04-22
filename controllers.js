@@ -6,7 +6,6 @@ const getUsers = async () => {
 
     const response = await verifyDataBaseConnection(request)
     return response
-
 }
 
 const createUser = async (userData) => {
@@ -30,7 +29,7 @@ const updateUser = async (id, updates) => {
     const { username, email, password } = updates
 
     const request = `UPDATE users SET username=?, email=?, password=? WHERE id=?`
-    // const [result] = await database.query(request, [username, email, password, id])
+
     const parameters = [username, email, password, id]
     const response = await verifyDataBaseConnection(request, parameters)
 
@@ -43,7 +42,7 @@ const updateUser = async (id, updates) => {
 
 const deleteUser = async (id) => {
     const request = `DELETE FROM users WHERE id=?`
-    // const [result] = await database.query(request, [id])
+
     const parameters = id
     const response = await verifyDataBaseConnection(request, parameters)
 

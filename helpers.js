@@ -9,11 +9,11 @@ const existingFields = (data) => {
 }
 
 const emailFormat = (email) => {
-    return email.endsWith('@gmail.com') // Devuelve el valor booleano que resulte de esa expresión.
+    return email.endsWith('@gmail.com') // Devuelve el valor booleano que resulte de la expresión.
 }
 
 const verifyDataLength = (value) => {
-    return value.length > 4 && !value.length < 20
+    return value.length >= 4 && !value.length <= 20
 }
 
 const charactersValidation = (value, type) => {

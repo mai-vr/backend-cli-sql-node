@@ -5,27 +5,55 @@ const parameters = process.argv
 const values = parameters.slice(2)
 
 const operation = values[0]
-// const id = values[1]
 const username = values[1]
 const email = values[2]
 const password = values[3]
-const uniqueId = new Set()
 let result
 
 const main = async () => {
     switch (operation) {
         case 'get':
-
             result = await getUsers()
             break
 
         case 'create':
-            const userData = {username: username, email: email, password: password}
+            const userData = { username: username, email: email, password: password }
 
             if (!existingFields(userData)) {
                 result = 'Username, email and password are required'
                 break
-            } else if (!emailFormat(userData.email)){
+            } else if (!emailFormat(userData.email)) {
+                result = 'Invalid format for email, it should ends with @gmail.com'
+                break
+            }
+
+            if (!verifyDataLength(username) || !verifyDataLength(password)) {
+                result = 'Password and username must include between 4 and 20 characters'
+                break
+            }
+
+            if (!charactersValidation(username, 'username')) {
+                result = 'Username must contains words'
+                break
+            } else if (!charactersValidation(password, 'password')) {
+                result = 'Password must includes at least a capital letter, a lower case letter and a number'
+                break
+            }
+
+            result = await createUser(userData)
+            break
+
+        case 'update':
+            const newUserData = { username: username, email: email, password: password }
+            const id = values[4]
+
+            if (!existingFields(newUserData)) {
+                result = 'The new username, email and password are needed'
+                break
+            } else if (!id) {
+                result = 'ID is required to know the user to update'
+                break
+            } else if (!emailFormat(newUserData.email)) {
                 result = 'Invalid format for email, it should ends with @gmail.com'
                 break
             }
@@ -43,26 +71,6 @@ const main = async () => {
                 break
             }
 
-            result = await createUser(userData)
-            break
-
-        case 'update':
-            const newUserData = {username: username, email: email, password: password}
-            const id = values[4]
-
-            if (!existingFields(newUserData) || !id) {
-                result = 'Username, email, password and the id of the user you want to update are needed'
-                break
-            } else if (!emailFormat(newUserData.email)) {
-                result = 'Invalid format for email, it should ends with @gmail.com'
-                break
-            }
-
-            if (!verifyDataLength(username) || !verifyDataLength(password)) {
-                result = 'Password and username must include between 4 and 20 characters'
-                break
-            }
-
             result = await updateUser(id, newUserData)
             break
 
@@ -72,7 +80,7 @@ const main = async () => {
                 result = 'ID is required'
                 break
             }
-            
+
             result = await deleteUser(idDeleted)
             break
 
@@ -94,6 +102,9 @@ const main = async () => {
     }
 
     console.log(result)
+    setTimeout(() => {
+        process.exit(1)
+    }, 1500)
 }
 
 main()

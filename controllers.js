@@ -12,10 +12,6 @@ const getUsers = async () => {
 const createUser = async (userData) => {
     const { username, email, password } = userData
     const id = crypto.randomUUID()
-
-    // if (!uniqueId(id)) {
-    //     return 'We got problems generating the ID'
-    // }
     
     const request = `INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)`
 
@@ -34,9 +30,11 @@ const updateUser = async (id, updates) => {
     const { username, email, password } = updates
 
     const request = `UPDATE users SET username=?, email=?, password=? WHERE id=?`
-    const [result] = await database.query(request, [username, email, password, id])
+    // const [result] = await database.query(request, [username, email, password, id])
+    const parameters = [username, email, password, id]
+    const response = await verifyDataBaseConnection(request, parameters)
 
-    if (result.serverStatus === 2 && result.affectedRows === 1) {
+    if (response.serverStatus === 2 && response.affectedRows === 1) {
         return 'User updated succesfully'
     } else {
         return 'Could not find the user to update'
@@ -45,7 +43,9 @@ const updateUser = async (id, updates) => {
 
 const deleteUser = async (id) => {
     const request = `DELETE FROM users WHERE id=?`
-    const [result] = await database.query(request, [id])
+    // const [result] = await database.query(request, [id])
+    const parameters = id
+    const response = await verifyDataBaseConnection(request, parameters)
 
     if (result.serverStatus === 2 && result.affectedRows === 1) {
         return 'Delete succesfully'

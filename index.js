@@ -21,6 +21,7 @@ const main = async () => {
 
         case 'create':
             const userData = {username: username, email: email, password: password}
+            
             if (!existingFields(userData)) {
                 result = 'Username, email and password are required'
                 break

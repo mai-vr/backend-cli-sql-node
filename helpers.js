@@ -14,21 +14,6 @@ const emailFormat = (email) => {
     }
 }
 
-const setIds = (id) => {
-    const values = new Set()
-    return values.add(id)   // Valida que el ID sea único.
-}
-
-const uniqueId = (id) => {
-    setIds(id)
-
-    if (setIds(id).has(id)) {
-        return false
-    }
-
-    return true
-}
-
 const verifyDataBaseConnection = async (request, params = []) => {
     try {
         const [result] = await database.query(request, params)
@@ -36,9 +21,11 @@ const verifyDataBaseConnection = async (request, params = []) => {
     } catch (error) {
         if (error.code === 'ECONNREFUSED' || error.errno === -4078) {
             return 'Could not connect to the database'
+        } else if (error.code === 'ER_DUP_ENTRY') {
+            return 'The email or the id is being used' // La base de datos tiene como condición que el email y el id sean únicos.
         }
         return error.message
     }
 }
 
-export { existingFields, emailFormat, uniqueId, verifyDataBaseConnection }
+export { existingFields, emailFormat, verifyDataBaseConnection }

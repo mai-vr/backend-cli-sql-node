@@ -1,5 +1,5 @@
 import { database } from "./configSql.js"
-import { existingFields, uniqueId, verifyDataBaseConnection } from "./helpers.js"
+import { existingFields, verifyDataBaseConnection } from "./helpers.js"
 
 const getUsers = async () => {
     const request = `SELECT * FROM users`

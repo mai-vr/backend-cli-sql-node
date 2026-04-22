@@ -1,5 +1,5 @@
 import { getUsers, createUser, updateUser, deleteUser } from "./controllers.js"
-import { emailFormat, existingFields } from './helpers.js'
+import { emailFormat, existingFields, verifyDataLength } from './helpers.js'
 
 const parameters = process.argv
 const values = parameters.slice(2)
@@ -21,12 +21,17 @@ const main = async () => {
 
         case 'create':
             const userData = {username: username, email: email, password: password}
-            
+
             if (!existingFields(userData)) {
                 result = 'Username, email and password are required'
                 break
             } else if (!emailFormat(userData.email)){
                 result = 'Invalid format for email, it should ends with @gmail.com'
+                break
+            }
+
+            if (!verifyDataLength(username) || !verifyDataLength(password)) {
+                result = 'Password and username must include between 4 and 20 characters'
                 break
             }
 
@@ -42,6 +47,11 @@ const main = async () => {
                 break
             } else if (!emailFormat(newUserData.email)) {
                 result = 'Invalid format for email, it should ends with @gmail.com'
+                break
+            }
+
+            if (!verifyDataLength(username) || !verifyDataLength(password)) {
+                result = 'Password and username must include between 4 and 20 characters'
                 break
             }
 

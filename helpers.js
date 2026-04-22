@@ -9,9 +9,11 @@ const existingFields = (data) => {
 }
 
 const emailFormat = (email) => {
-    if (email.endsWith('@gmail.com')) {
-        return true
-    }
+    return email.endsWith('@gmail.com') // Devuelve el valor booleano que resulte de esa expresión.
+}
+
+const verifyDataLength = (value) => {
+    return value.length > 4 && !value.length < 20
 }
 
 const verifyDataBaseConnection = async (request, params = []) => {
@@ -28,4 +30,4 @@ const verifyDataBaseConnection = async (request, params = []) => {
     }
 }
 
-export { existingFields, emailFormat, verifyDataBaseConnection }
+export { existingFields, emailFormat, verifyDataLength, verifyDataBaseConnection }

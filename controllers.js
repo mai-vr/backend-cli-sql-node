@@ -47,7 +47,7 @@ const deleteUser = async (id) => {
     const parameters = id
     const response = await verifyDataBaseConnection(request, parameters)
 
-    if (result.serverStatus === 2 && result.affectedRows === 1) {
+    if (response.serverStatus === 2 && response.affectedRows === 1) {
         return 'Delete succesfully'
     } else {
         return 'Could not find the user'

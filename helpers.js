@@ -16,6 +16,17 @@ const verifyDataLength = (value) => {
     return value.length > 4 && !value.length < 20
 }
 
+const charactersValidation = (value, type) => {
+    const usernameCharacters = /^[a-zA-Z]+$/
+    const passwordCharacters = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$/
+
+    if (type === 'username') {
+        return usernameCharacters.test(value)
+    } else if (type === 'password') {
+        return passwordCharacters.test(value)
+    }
+}
+
 const verifyDataBaseConnection = async (request, params = []) => {
     try {
         const [result] = await database.query(request, params)
@@ -30,4 +41,4 @@ const verifyDataBaseConnection = async (request, params = []) => {
     }
 }
 
-export { existingFields, emailFormat, verifyDataLength, verifyDataBaseConnection }
+export { existingFields, emailFormat, verifyDataLength, charactersValidation, verifyDataBaseConnection }

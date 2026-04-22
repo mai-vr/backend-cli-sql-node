@@ -1,5 +1,5 @@
 import { getUsers, createUser, updateUser, deleteUser } from "./controllers.js"
-import { emailFormat, existingFields, verifyDataLength } from './helpers.js'
+import { charactersValidation, emailFormat, existingFields, verifyDataLength } from './helpers.js'
 
 const parameters = process.argv
 const values = parameters.slice(2)
@@ -32,6 +32,14 @@ const main = async () => {
 
             if (!verifyDataLength(username) || !verifyDataLength(password)) {
                 result = 'Password and username must include between 4 and 20 characters'
+                break
+            }
+
+            if (!charactersValidation(username, 'username')) {
+                result = 'Username must contains words'
+                break
+            } else if (!charactersValidation(password, 'password')) {
+                result = 'Incorrect format for password'
                 break
             }
 

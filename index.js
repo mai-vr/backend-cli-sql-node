@@ -4,29 +4,29 @@ import { charactersValidation, emailFormat, existingFields, verifyDataLength } f
 const parameters = process.argv
 const values = parameters.slice(2)
 
-const operation = values[0]
+const operation = values[0] 
 const username = values[1]
 const email = values[2]
 const password = values[3]
-let result
+let result  // Variable que se utilizará para mostrar el mensaje correspondiente luego de cada operación.
 
 const main = async () => {
     switch (operation) {
         case 'get':
-            result = await getUsers()
+            result = await getUsers()   // getUsers() es una función asíncrona ya que debe ir a consultar a la base de datos la información a mostrar.
             break
 
         case 'create':
             const userData = { username: username, email: email, password: password }
 
-            if (!existingFields(userData)) {
+            if (!existingFields(userData)) { //Todos los datos son requeridos para crear un usuario.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   Username, email and password are required. °
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 `
                 break
-            } else if (!emailFormat(userData.email)) {
+            } else if (!emailFormat(userData.email)) { // Solo se aceptan correos electrónicos de gmail.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °           Invalid format for email.          °           
@@ -36,17 +36,17 @@ const main = async () => {
                 break
             }
 
-            if (!verifyDataLength(username) || !verifyDataLength(password)) {
+            if (!verifyDataLength(username) || !verifyDataLength(password)) { // Usurio y contraseña deben tener entre 3 y 20 caracteres.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   Password and username must include   °       
-                °   between 4 and 20 characters          °
+                °   between 3 and 20 characters          °
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 `
                 break
             }
 
-            if (!charactersValidation(username, 'username')) {
+            if (!charactersValidation(username, 'username')) {  // Verifica el contenido del username ingresado.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   Username must contains words   °
@@ -71,14 +71,14 @@ const main = async () => {
             const newUserData = { username: username, email: email, password: password }
             const id = values[4]
 
-            if (!existingFields(newUserData)) {
+            if (!existingFields(newUserData)) { // Todos los campos son requeridos.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   New username, email and password are required.   °
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 `
                 break
-            } else if (!id) {
+            } else if (!id) {   // Impedir que se pase a la base de datos sin un id ingresado para buscar al usuario a actualizar.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   ID is required to know the user to update  °
@@ -127,8 +127,8 @@ const main = async () => {
             break
 
         case 'delete':
-            const idDeleted = values[1]
-            if (!idDeleted) {
+            const idDeleted = values[1] 
+            if (!idDeleted) {   // A partir del id se puede identificar el usuario a borrar, no esperar a llegar a la base de datos para verificar que no se ingresó el dato requerido.
                 result = `
                 °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
                 °   ID is required to know the user to delete  °
@@ -157,8 +157,8 @@ const main = async () => {
             break
     }
 
-    console.log(result)
-    setTimeout(() => {
+    console.log(result) 
+    setTimeout(() => {  // Luego de un segundo y medio se puede volver a escribir en la CLI.
         process.exit(1)
     }, 1500)
 }

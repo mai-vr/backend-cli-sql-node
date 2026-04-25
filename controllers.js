@@ -4,7 +4,7 @@ import { existingFields, verifyDataBaseConnection } from "./helpers.js"
 const getUsers = async () => {
     const request = `SELECT * FROM users`
 
-    const response = await verifyDataBaseConnection(request)
+    const response = await verifyDataBaseConnection(request)    // Realiza la consulta a la base de datos y si está conectada, devuelve la lista de usuarios, sino lanza un mensaje.
     return response
 }
 
@@ -12,11 +12,11 @@ const createUser = async (userData) => {
     const { username, email, password } = userData
     const id = crypto.randomUUID()
     
-    const request = `INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)`
+    const request = `INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)` // Evitar SQL injections con los '?' en VALUES.
 
     const parameters = [id, username, email, password]
 
-    const response = await verifyDataBaseConnection(request, parameters)
+    const response = await verifyDataBaseConnection(request, parameters)    // La query se resuelve en esta función que devolverá los valores esperados o avisará que la base de datos no está conectada.
 
     if (response.serverStatus === 2) {
         return `

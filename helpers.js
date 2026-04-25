@@ -10,15 +10,17 @@ const existingFields = (data) => {
 
 const emailFormat = (email) => {
     return email.endsWith('@gmail.com') // Devuelve el valor booleano que resulte de la expresión.
+    // Solo se aceptan correos electrónicos de gmail.
 }
 
 const verifyDataLength = (value) => {
-    return value.length >= 4 && !value.length <= 20
+    return value.length >= 3 && !value.length <= 20
 }
 
 const charactersValidation = (value, type) => {
-    const usernameCharacters = /^[a-zA-Z]+$/
-    const passwordCharacters = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$/
+    const usernameCharacters = /^[a-zA-Z]+$/ // El nombre solo puede contener letras.
+    const passwordCharacters = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,}$/    
+    // La contraseña debe contener solo letras mayúsculas, minúsculas y números.
 
     if (type === 'username') {
         return usernameCharacters.test(value)
@@ -33,9 +35,18 @@ const verifyDataBaseConnection = async (request, params = []) => {
         return result
     } catch (error) {
         if (error.code === 'ECONNREFUSED' || error.errno === -4078) {
-            return 'Could not connect to the database'
+            return `
+            °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            °   Could not connect to the database   °
+            °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            `
         } else if (error.code === 'ER_DUP_ENTRY') {
-            return 'The email or the id is being used' // La base de datos tiene como condición que el email y el id sean únicos.
+            return `
+            °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            °   The email or the id is being used   °
+            °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            `
+            // La base de datos tiene como condición que el email y el id sean únicos.
         }
         return error.message
     }

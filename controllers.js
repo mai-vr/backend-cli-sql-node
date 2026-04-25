@@ -19,7 +19,12 @@ const createUser = async (userData) => {
     const response = await verifyDataBaseConnection(request, parameters)
 
     if (response.serverStatus === 2) {
-        return 'User created succesfully'
+        return `
+        +++++++++++++++++++++++++++++++++
+        +   User created succesfully    +
+        +++++++++++++++++++++++++++++++++
+        `
+        
     } else {
         return response
     }
@@ -34,9 +39,17 @@ const updateUser = async (id, updates) => {
     const response = await verifyDataBaseConnection(request, parameters)
 
     if (response.serverStatus === 2 && response.affectedRows === 1) {
-        return 'User updated succesfully'
+        return `
+        +++++++++++++++++++++++++++++++++
+        +   User updated succesfully    +
+        +++++++++++++++++++++++++++++++++
+        `
     } else {
-        return 'Could not find the user to update'
+        return `
+        °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+        °   Could not find the user to update   °
+        °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+        `
     }
 }
 
@@ -47,9 +60,17 @@ const deleteUser = async (id) => {
     const response = await verifyDataBaseConnection(request, parameters)
 
     if (response.serverStatus === 2 && response.affectedRows === 1) {
-        return 'Delete succesfully'
+        return `
+        +++++++++++++++++++++++++++++++++++++++++
+        +   The user was deleted succesfully    +
+        +++++++++++++++++++++++++++++++++++++++++
+        `
     } else {
-        return 'Could not find the user'
+        return `
+        °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+        °   Could not find the user to delete   °
+        °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+        `
     }
 }
 
